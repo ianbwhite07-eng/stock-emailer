@@ -1,0 +1,43 @@
+name: Stock Report
+
+on:
+  schedule:
+    # Morning: 8:00 AM Pacific (15:00 UTC in summer / PDT)
+    - cron: "0 15 * * 1-5"
+    # Evening: 5:00 PM Pacific (00:00 UTC next day / PDT)
+    - cron: "0 0 * * 2-6"
+  workflow_dispatch:   # lets you run it manually from GitHub anytime
+
+permissions:
+  contents: write      # needed to commit snapshot.json back after each run
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run stock report emailer
+        env:
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          FINNHUB_KEY:    ${{ secrets.FINNHUB_KEY }}
+          FRED_KEY:       ${{ secrets.FRED_KEY }}
+        run: python cloud_emailer.py
+
+      - name: Commit updated snapshot
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add snapshot.json latest_report.html
+          git diff --staged --quiet || git commit -m "Update snapshot + report [skip ci]"
+          git push

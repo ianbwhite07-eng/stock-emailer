@@ -98,11 +98,11 @@
     "price": 438.1
   },
   "ULH": {
-    "score_overall": 4.0,
-    "score_short": 6,
-    "score_mid": 2,
+    "score_overall": 5.0,
+    "score_short": 5,
+    "score_mid": 5,
     "score_long": 5,
-    "price": 14.2
+    "price": "N/A"
   },
   "PACB": {
     "score_overall": 5.7,

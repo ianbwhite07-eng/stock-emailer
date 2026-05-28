@@ -1,7 +1,7 @@
 {
   "ALGT": {
-    "score_overall": 6.0,
-    "score_short": 8,
+    "score_overall": 5.8,
+    "score_short": 7,
     "score_mid": 3,
     "score_long": 8,
     "price": 91.0
@@ -70,8 +70,8 @@
     "price": 4.16
   },
   "BTSG": {
-    "score_overall": 7.0,
-    "score_short": 7,
+    "score_overall": 7.3,
+    "score_short": 8,
     "score_mid": 8,
     "score_long": 6,
     "price": 60.55
@@ -196,8 +196,8 @@
     "price": 65.4
   },
   "RKLB": {
-    "score_overall": 6.2,
-    "score_short": 8,
+    "score_overall": 6.5,
+    "score_short": 9,
     "score_mid": 8,
     "score_long": 3,
     "price": 150.23
@@ -287,8 +287,8 @@
     "price": 7.61
   },
   "IDN": {
-    "score_overall": 4.3,
-    "score_short": 1,
+    "score_overall": 4.5,
+    "score_short": 2,
     "score_mid": 4,
     "score_long": 7,
     "price": 4.19

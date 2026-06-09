@@ -1,0 +1,60 @@
+[
+  {
+    "date": "2026-06-09",
+    "picks": [
+      {
+        "ticker": "SLM",
+        "entry_price": 22.75,
+        "score": 8.0
+      },
+      {
+        "ticker": "VIRT",
+        "entry_price": 53.55,
+        "score": 7.8
+      },
+      {
+        "ticker": "ECPG",
+        "entry_price": 80.84,
+        "score": 7.7
+      },
+      {
+        "ticker": "JILL",
+        "entry_price": 13.4,
+        "score": 7.6
+      },
+      {
+        "ticker": "ATLC",
+        "entry_price": 86.81,
+        "score": 7.6
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 175.6,
+        "score": 7.4
+      },
+      {
+        "ticker": "FCFS",
+        "entry_price": 226.21,
+        "score": 7.3
+      },
+      {
+        "ticker": "EZPW",
+        "entry_price": 31.16,
+        "score": 7.2
+      },
+      {
+        "ticker": "APP",
+        "entry_price": 520.02,
+        "score": 7.1
+      }
+    ],
+    "voo_entry": 673.01,
+    "evaluated": false,
+    "picks_exit": {},
+    "voo_exit": null,
+    "picks_return_pct": null,
+    "voo_return_pct": null,
+    "beat_voo": null,
+    "evaluated_date": null
+  }
+]

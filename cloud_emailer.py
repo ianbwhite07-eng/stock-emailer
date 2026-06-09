@@ -40,10 +40,11 @@ FRED_KEY      = os.environ.get("FRED_KEY", "")
 BUY_THRESHOLD  = 7.0
 SELL_THRESHOLD = 4.0
 
-SCRIPT_DIR     = os.path.dirname(os.path.abspath(__file__))
-WATCHLIST_FILE = os.path.join(SCRIPT_DIR, "watchlist.json")
-SNAPSHOT_FILE  = os.path.join(SCRIPT_DIR, "snapshot.json")
-REPORT_FILE    = os.path.join(SCRIPT_DIR, "latest_report.html")
+SCRIPT_DIR          = os.path.dirname(os.path.abspath(__file__))
+WATCHLIST_FILE      = os.path.join(SCRIPT_DIR, "watchlist.json")
+SNAPSHOT_FILE       = os.path.join(SCRIPT_DIR, "snapshot.json")
+REPORT_FILE         = os.path.join(SCRIPT_DIR, "latest_report.html")
+PICKS_TRACKER_FILE  = os.path.join(SCRIPT_DIR, "picks_tracker.json")
 
 
 # ─────────────────────────────────────────────
@@ -548,11 +549,371 @@ def horizon_rows(stocks, horizon_key, label, emoji):
 
 
 # ─────────────────────────────────────────────
+# PICKS TRACKER (performance vs VOO)
+# ─────────────────────────────────────────────
+
+def load_picks_tracker():
+    if os.path.exists(PICKS_TRACKER_FILE):
+        with open(PICKS_TRACKER_FILE) as f:
+            return json.load(f)
+    return []
+
+def save_picks_snapshot(stocks, tracker):
+    """Append today's picks + VOO entry to tracker. Skips if today already snapshotted."""
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    if any(e["date"] == today for e in tracker):
+        return tracker
+
+    overall_buys = sorted(
+        [(t, d) for t, d in stocks.items()
+         if isinstance(d.get("score_overall"), (int, float)) and d["score_overall"] >= 7
+         and isinstance(d.get("price"), (int, float))],
+        key=lambda x: x[1]["score_overall"], reverse=True
+    )[:10]
+
+    if not overall_buys:
+        print(f"[PicksTracker] No buys (score>=7) today, skipping snapshot.")
+        return tracker
+
+    voo_price = None
+    try:
+        raw = yf.download("VOO", period="2d", progress=False, auto_adjust=True)
+        close = raw["Close"]
+        if isinstance(close, pd.DataFrame): close = close.iloc[:, 0]
+        close = close.dropna()
+        if not close.empty:
+            voo_price = round(float(close.iloc[-1]), 2)
+    except Exception as e:
+        print(f"[PicksTracker] VOO fetch error: {e}")
+
+    snapshot = {
+        "date": today,
+        "picks": [{"ticker": t, "entry_price": d["price"], "score": d["score_overall"]}
+                  for t, d in overall_buys],
+        "voo_entry":        voo_price,
+        "evaluated":        False,
+        "picks_exit":       {},
+        "voo_exit":         None,
+        "picks_return_pct": None,
+        "voo_return_pct":   None,
+        "beat_voo":         None,
+        "evaluated_date":   None,
+    }
+    tracker = tracker + [snapshot]
+    tracker = tracker[-120:]  # cap at 4 months
+    print(f"[PicksTracker] Saved snapshot {today}: {len(snapshot['picks'])} picks, VOO @ ${voo_price}")
+    return tracker
+
+def evaluate_picks_tracker(tracker):
+    """Fill in exit prices + compute returns for snapshots 1+ days old."""
+    cutoff = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d")
+    pending = [e for e in tracker if not e.get("evaluated") and e.get("date", "9999") <= cutoff]
+    if not pending:
+        return tracker
+
+    all_tickers = set()
+    for snap in pending:
+        all_tickers.update(p["ticker"] for p in snap.get("picks", []))
+    all_tickers.add("VOO")
+
+    try:
+        raw = yf.download(list(all_tickers), period="5d", progress=False, auto_adjust=True)
+        close = raw["Close"]
+        if isinstance(close, pd.Series):
+            close = close.to_frame(name=next(iter(all_tickers - {"VOO"}), "VOO"))
+        if isinstance(close.columns, pd.MultiIndex):
+            close.columns = close.columns.get_level_values(-1)
+    except Exception as e:
+        print(f"[PicksTracker] yfinance error: {e}")
+        return tracker
+
+    changed = False
+    for snap in tracker:
+        if snap.get("evaluated") or snap.get("date", "9999") > cutoff:
+            continue
+        picks = snap.get("picks", [])
+        voo_entry = snap.get("voo_entry")
+        if not picks or not voo_entry:
+            snap["evaluated"] = True
+            changed = True
+            continue
+
+        picks_exit = {}
+        for p in picks:
+            t = p["ticker"]
+            if t in close.columns:
+                s = close[t].dropna()
+                if not s.empty:
+                    picks_exit[t] = round(float(s.iloc[-1]), 2)
+
+        voo_exit = None
+        if "VOO" in close.columns:
+            s = close["VOO"].dropna()
+            if not s.empty:
+                voo_exit = round(float(s.iloc[-1]), 2)
+
+        if not picks_exit or voo_exit is None:
+            continue
+
+        returns = [
+            (picks_exit[p["ticker"]] - p["entry_price"]) / p["entry_price"] * 100
+            for p in picks
+            if p["ticker"] in picks_exit and (p.get("entry_price") or 0) > 0
+        ]
+        if not returns:
+            continue
+
+        picks_ret = round(sum(returns) / len(returns), 2)
+        voo_ret   = round((voo_exit - voo_entry) / voo_entry * 100, 2)
+        beat = picks_ret > voo_ret
+        snap.update({
+            "picks_exit":       picks_exit,
+            "voo_exit":         voo_exit,
+            "picks_return_pct": picks_ret,
+            "voo_return_pct":   voo_ret,
+            "beat_voo":         beat,
+            "evaluated":        True,
+            "evaluated_date":   datetime.utcnow().strftime("%Y-%m-%d"),
+        })
+        changed = True
+        print(f"[PicksTracker] {snap['date']}: picks {picks_ret:+.2f}% vs VOO {voo_ret:+.2f}% — {'BEAT' if beat else 'MISSED'}")
+
+    if changed:
+        print("[PicksTracker] Evaluations complete.")
+    return tracker
+
+def save_picks_tracker(tracker):
+    with open(PICKS_TRACKER_FILE, "w") as f:
+        json.dump(tracker, f, indent=2)
+
+def picks_stats(tracker):
+    evaluated = [e for e in tracker if e.get("evaluated") and e.get("picks_return_pct") is not None]
+    if not evaluated:
+        return None
+    wins  = sum(1 for e in evaluated if e.get("beat_voo"))
+    total = len(evaluated)
+    avg_picks  = round(sum(e["picks_return_pct"] for e in evaluated) / total, 2)
+    avg_voo    = round(sum(e["voo_return_pct"]   for e in evaluated) / total, 2)
+    return {
+        "wins":       wins,
+        "losses":     total - wins,
+        "total":      total,
+        "win_rate":   round(wins / total * 100, 1),
+        "avg_picks":  avg_picks,
+        "avg_voo":    avg_voo,
+        "avg_margin": round(avg_picks - avg_voo, 2),
+        "recent":     sorted(evaluated, key=lambda x: x["date"], reverse=True),
+    }
+
+def picks_tracker_email_section(tracker):
+    stats = picks_stats(tracker)
+    if not stats or not stats["recent"]:
+        return ""
+
+    win_color    = "#22c55e" if stats["win_rate"] >= 50 else "#ef4444"
+    margin_color = "#22c55e" if stats["avg_margin"] >= 0 else "#ef4444"
+    avg_margin_s = f"{'+'if stats['avg_margin']>=0 else ''}{stats['avg_margin']:.2f}%"
+
+    summary_cells = "".join(f"""
+      <td style="text-align:center;padding:10px 14px;border-right:1px solid #1e293b;">
+        <div style="font-size:20px;font-weight:800;color:{vc};">{vl}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:3px;">{lbl}</div>
+      </td>""" for vc, vl, lbl in [
+        (win_color,    f"{stats['win_rate']:.0f}%",               "Win Rate vs VOO"),
+        (win_color,    f"{stats['wins']}W–{stats['losses']}L", "Record"),
+        (margin_color, avg_margin_s,                               "Avg Daily Edge"),
+        ("#94a3b8",    str(stats["total"]),                        "Days Tracked"),
+    ])
+
+    history_rows = ""
+    for snap in stats["recent"][:7]:
+        p_ret  = snap.get("picks_return_pct") or 0
+        v_ret  = snap.get("voo_return_pct")   or 0
+        margin = round(p_ret - v_ret, 2)
+        beat   = snap.get("beat_voo")
+        pc = "#22c55e" if p_ret  >= 0 else "#ef4444"
+        vc = "#22c55e" if v_ret  >= 0 else "#ef4444"
+        mc = "#22c55e" if margin >= 0 else "#ef4444"
+        tickers_str = ", ".join(p["ticker"] for p in snap.get("picks", [])[:5])
+        if len(snap.get("picks", [])) > 5:
+            tickers_str += f" +{len(snap['picks'])-5}"
+        history_rows += f"""
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:6px 10px;color:#94a3b8;font-size:11px;white-space:nowrap;">{snap.get('date','')}</td>
+            <td style="padding:6px 10px;font-size:13px;">{'&#10003;' if beat else '&#10007;'}</td>
+            <td style="padding:6px 10px;font-size:11px;color:{pc};font-weight:600;">{'+'if p_ret>=0 else ''}{p_ret:.2f}%</td>
+            <td style="padding:6px 10px;font-size:11px;color:{vc};">{'+'if v_ret>=0 else ''}{v_ret:.2f}%</td>
+            <td style="padding:6px 10px;font-size:11px;color:{mc};font-weight:600;">{'+'if margin>=0 else ''}{margin:.2f}%</td>
+            <td style="padding:6px 10px;font-size:10px;color:#64748b;">{tickers_str}</td>
+          </tr>"""
+
+    latest = stats["recent"][0]
+    pick_detail_rows = ""
+    for p in latest.get("picks", []):
+        ticker = p.get("ticker","")
+        entry  = p.get("entry_price") or 0
+        exit_p = latest.get("picks_exit", {}).get(ticker) or 0
+        if entry and exit_p:
+            ret = (exit_p - entry) / entry * 100
+            rc = "#22c55e" if ret >= 0 else "#ef4444"
+            pick_detail_rows += f"""
+              <tr style="border-bottom:1px solid #1e293b;">
+                <td style="padding:5px 9px;font-size:11px;color:#e2e8f0;font-weight:700;">{ticker}</td>
+                <td style="padding:5px 9px;font-size:11px;color:#94a3b8;">${entry:.2f}</td>
+                <td style="padding:5px 9px;font-size:11px;color:#94a3b8;">${exit_p:.2f}</td>
+                <td style="padding:5px 9px;font-size:11px;color:{rc};font-weight:600;">{'+'if ret>=0 else ''}{ret:.2f}%</td>
+              </tr>"""
+    voo_r  = latest.get("voo_return_pct") or 0
+    vc2    = "#22c55e" if voo_r >= 0 else "#ef4444"
+    pick_detail_rows += f"""
+      <tr style="background:#1a2840;">
+        <td colspan="3" style="padding:5px 9px;font-size:11px;color:#94a3b8;font-weight:700;">VOO (benchmark)</td>
+        <td style="padding:5px 9px;font-size:11px;color:{vc2};font-weight:700;">{'+'if voo_r>=0 else ''}{voo_r:.2f}%</td>
+      </tr>"""
+
+    p_ret_latest = latest.get("picks_return_pct") or 0
+    beat_latest  = latest.get("beat_voo")
+    result_color = "#22c55e" if beat_latest else "#ef4444"
+    result_label = "Beat VOO" if beat_latest else "Missed VOO"
+
+    return f"""
+    <tr><td colspan="8" style="padding:18px 12px 4px;background:#0f172a;">
+      <div style="border-top:1px solid #334155;padding-top:14px;font-size:11px;
+           font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#475569;">
+        &#128200; Picks vs S&amp;P 500 &#8212; Track Record ($100 equal-weight basket vs VOO)
+      </div>
+    </td></tr>
+    <tr><td colspan="8" style="padding:4px 12px 20px;background:#0f172a;">
+
+      <table width="100%" cellpadding="0" cellspacing="0"
+             style="background:#1e293b;border-radius:8px;margin-bottom:14px;">
+        <tr>{summary_cells}</tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0"
+             style="border-collapse:collapse;background:#0a1628;border-radius:6px;margin-bottom:14px;">
+        <tr style="border-bottom:2px solid #334155;">
+          <th style="padding:6px 10px;font-size:10px;color:#475569;text-align:left;text-transform:uppercase;">Date</th>
+          <th style="padding:6px 10px;font-size:10px;color:#475569;text-align:left;">Result</th>
+          <th style="padding:6px 10px;font-size:10px;color:#475569;text-align:left;">Picks Avg</th>
+          <th style="padding:6px 10px;font-size:10px;color:#475569;text-align:left;">VOO</th>
+          <th style="padding:6px 10px;font-size:10px;color:#475569;text-align:left;">Edge</th>
+          <th style="padding:6px 10px;font-size:10px;color:#475569;text-align:left;">Tickers</th>
+        </tr>
+        {history_rows}
+      </table>
+
+      <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;
+                  letter-spacing:0.06em;margin-bottom:6px;">
+        Latest ({latest.get('date','')}) &#8212; Individual Picks
+        <span style="color:{result_color};margin-left:8px;">{result_label}
+          ({'+' if p_ret_latest>=0 else ''}{p_ret_latest:.2f}% vs VOO)</span>
+      </div>
+      <table width="100%" cellpadding="0" cellspacing="0"
+             style="border-collapse:collapse;background:#0a1628;border-radius:6px;">
+        <tr style="border-bottom:1px solid #334155;">
+          <th style="padding:5px 9px;font-size:10px;color:#475569;text-align:left;">Ticker</th>
+          <th style="padding:5px 9px;font-size:10px;color:#475569;text-align:left;">Entry</th>
+          <th style="padding:5px 9px;font-size:10px;color:#475569;text-align:left;">Exit</th>
+          <th style="padding:5px 9px;font-size:10px;color:#475569;text-align:left;">Return</th>
+        </tr>
+        {pick_detail_rows}
+      </table>
+
+    </td></tr>"""
+
+def picks_tracker_local_panel(tracker):
+    stats = picks_stats(tracker)
+    if not stats or not stats["recent"]:
+        return """<div id="trackrecord" class="panel">
+          <p style="color:#64748b;padding:24px 0;">No track record yet. Data accumulates after the first full day.</p>
+        </div>"""
+
+    win_color    = "#22c55e" if stats["win_rate"] >= 50 else "#ef4444"
+    margin_color = "#22c55e" if stats["avg_margin"] >= 0 else "#ef4444"
+
+    stat_cards = "".join(f"""
+      <div style="background:#1e293b;border-radius:8px;padding:16px 22px;text-align:center;">
+        <div style="font-size:26px;font-weight:800;color:{vc};">{vl}</div>
+        <div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">{lbl}</div>
+      </div>""" for vc, vl, lbl in [
+        (win_color,    f"{stats['win_rate']:.0f}%",                 "Win Rate vs VOO"),
+        (win_color,    f"{stats['wins']}W / {stats['losses']}L",    "Record"),
+        (margin_color, f"{'+'if stats['avg_margin']>=0 else ''}{stats['avg_margin']:.2f}%", "Avg Daily Edge"),
+        ("#94a3b8",    str(stats["total"]),                         "Days Tracked"),
+    ])
+
+    history_rows = ""
+    for snap in stats["recent"]:
+        p_ret  = snap.get("picks_return_pct") or 0
+        v_ret  = snap.get("voo_return_pct")   or 0
+        margin = round(p_ret - v_ret, 2)
+        beat   = snap.get("beat_voo")
+        pc = "pos" if p_ret  >= 0 else "neg"
+        vc = "pos" if v_ret  >= 0 else "neg"
+        mc = "pos" if margin >= 0 else "neg"
+        tickers_str = " &middot; ".join(p["ticker"] for p in snap.get("picks", []))
+        history_rows += f"""<tr>
+          <td>{snap.get('date','')}</td>
+          <td><span class="{'pos' if beat else 'neg'}">{'&#10003; Beat' if beat else '&#10007; Missed'}</span></td>
+          <td class="{pc}">{'+'if p_ret>=0 else ''}{p_ret:.2f}%</td>
+          <td class="{vc}">{'+'if v_ret>=0 else ''}{v_ret:.2f}%</td>
+          <td class="{mc}" style="font-weight:700;">{'+'if margin>=0 else ''}{margin:.2f}%</td>
+          <td style="font-size:12px;color:#94a3b8;">{tickers_str}</td>
+        </tr>"""
+
+    latest = stats["recent"][0]
+    pick_detail_rows = ""
+    for p in latest.get("picks", []):
+        ticker = p.get("ticker","")
+        entry  = p.get("entry_price") or 0
+        exit_p = latest.get("picks_exit", {}).get(ticker) or 0
+        if entry and exit_p:
+            ret = (exit_p - entry) / entry * 100
+            rc = "pos" if ret >= 0 else "neg"
+            pick_detail_rows += f"""<tr>
+              <td style="font-weight:700;color:#f1f5f9;">{ticker}</td>
+              <td>${entry:.2f}</td><td>${exit_p:.2f}</td>
+              <td class="{rc}">{'+'if ret>=0 else ''}{ret:.2f}%</td>
+            </tr>"""
+    voo_r = latest.get("voo_return_pct") or 0
+    vc2 = "pos" if voo_r >= 0 else "neg"
+    pick_detail_rows += f"""<tr style="background:rgba(255,255,255,0.03);">
+      <td colspan="3" style="color:#94a3b8;font-weight:600;">VOO (benchmark)</td>
+      <td class="{vc2}">{'+'if voo_r>=0 else ''}{voo_r:.2f}%</td>
+    </tr>"""
+
+    latest_pret = latest.get("picks_return_pct") or 0
+    latest_beat = latest.get("beat_voo")
+
+    return f"""<div id="trackrecord" class="panel">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;">{stat_cards}</div>
+      <h3 style="font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">
+        Full History &#8212; $100 Equal-Weight Basket vs VOO
+      </h3>
+      <table>
+        <tr><th>Date</th><th>Result</th><th>Picks Avg</th><th>VOO</th><th>Edge</th><th>Tickers</th></tr>
+        {history_rows}
+      </table>
+      <h3 style="font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin:28px 0 12px;">
+        Latest ({latest.get('date','')}) &#8212; Individual Picks
+        <span class="{'pos' if latest_beat else 'neg'}" style="font-size:13px;text-transform:none;letter-spacing:0;margin-left:10px;">
+          {'+'if latest_pret>=0 else ''}{latest_pret:.2f}% avg vs VOO ({'+' if voo_r>=0 else ''}{voo_r:.2f}%)
+        </span>
+      </h3>
+      <table>
+        <tr><th>Ticker</th><th>Entry</th><th>Exit</th><th>Return</th></tr>
+        {pick_detail_rows}
+      </table>
+    </div>"""
+
+
+# ─────────────────────────────────────────────
 # EMAIL BUILDER
 # ─────────────────────────────────────────────
 
 def build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared, notable,
-                all_buys, all_sells, all_holds, is_morning, data_updated):
+                all_buys, all_sells, all_holds, is_morning, data_updated, tracker=None):
     period    = "🌅 Morning" if is_morning else "🌙 Evening"
     now_str   = datetime.now().strftime("%B %d, %Y — %I:%M %p UTC")
     total_chg = len(new_buys) + len(new_sells) + len(buy_weakened) + len(sell_cleared)
@@ -599,6 +960,7 @@ def build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared, notable
     for d in all_holds: overall_rows += email_row(d)
 
     change_summary = f"{total_chg} signal change{'s' if total_chg!=1 else ''}" if total_chg else "No signal changes since last report"
+    picks_section  = picks_tracker_email_section(tracker or [])
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#0f172a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0;">
@@ -613,6 +975,7 @@ def build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared, notable
   </td></tr>
   <tr><td style="padding:0;">
     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:#0f172a;">
+      {picks_section}
       {divider("🔔 Signal Changes")}{TABLE_HDR}{chg_rows}
       {divider("⚡ Short-Term (days–weeks)")}{TABLE_HDR}{horizon_rows(stocks,"score_short","Short-Term","⚡")}
       {divider("📊 Mid-Term (weeks–months)")}{TABLE_HDR}{horizon_rows(stocks,"score_mid","Mid-Term","📊")}
@@ -659,7 +1022,7 @@ def local_row(d, score_key):
       <td class="{sc_cls}">{sent.title()}</td>
     </tr>"""
 
-def build_local_html(stocks, data_updated, is_morning):
+def build_local_html(stocks, data_updated, is_morning, tracker=None):
     period  = "🌅 Morning" if is_morning else "🌙 Evening"
     now_str = datetime.now().strftime("%B %d, %Y — %I:%M %p UTC")
     all_s   = list(stocks.values())
@@ -668,6 +1031,7 @@ def build_local_html(stocks, data_updated, is_morning):
         return "".join(local_row(d, key) for d in sorted(all_s, key=lambda x: x.get(key) or 0, reverse=True))
 
     th = "<tr><th>Ticker</th><th>Price</th><th>Score</th><th>S/M/L</th><th>MA</th><th>RSI</th><th>Analyst</th><th>Sentiment</th></tr>"
+    trackrecord_panel = picks_tracker_local_panel(tracker or [])
 
     return f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -704,6 +1068,7 @@ footer{{padding:14px 32px;background:#0a0f1e;border-top:1px solid #1e293b;font-s
   <button class="tab" onclick="show('short',this)">⚡ Short-Term</button>
   <button class="tab" onclick="show('mid',this)">📈 Mid-Term</button>
   <button class="tab" onclick="show('long',this)">🏦 Long-Term</button>
+  <button class="tab" onclick="show('trackrecord',this)">📈 Track Record</button>
 </div>
 <div id="overall" class="panel active">
   <div class="legend"><span class="badge buy">≥7 Buy</span><span class="badge hold">5–6.9 Hold</span><span class="badge sell">≤4 Sell</span>· Sorted by Overall score</div>
@@ -717,6 +1082,7 @@ footer{{padding:14px 32px;background:#0a0f1e;border-top:1px solid #1e293b;font-s
 <div id="long" class="panel">
   <div class="legend"><span class="badge buy">≥7 Buy</span><span class="badge sell">≤4 Sell</span>· Long-term (fundamentals + analyst ratings) · best for holds (months+)</div>
   <table>{th}{sorted_rows('score_long')}</table></div>
+{trackrecord_panel}
 <footer>S/M/L = Short/Mid/Long &nbsp;·&nbsp; Generated: {now_str} &nbsp;·&nbsp; Data: {data_updated or 'unknown'}</footer>
 <script>
 function show(id,btn){{
@@ -755,8 +1121,23 @@ def main():
     watchlist = load_watchlist()
     print(f"[Cloud Emailer] Watchlist: {watchlist}")
 
+    # Load + evaluate picks tracker before fetching new data
+    tracker = load_picks_tracker()
+    tracker = evaluate_picks_tracker(tracker)
+    tracker_stats = picks_stats(tracker)
+    if tracker_stats:
+        print(f"[PicksTracker] Record: {tracker_stats['wins']}W–{tracker_stats['losses']}L "
+              f"({tracker_stats['win_rate']}% win rate, avg edge {tracker_stats['avg_margin']:+.2f}%)")
+    else:
+        print("[PicksTracker] No evaluated history yet.")
+
     snapshot = load_snapshot()
     stocks   = fetch_all_data(watchlist)
+
+    # Snapshot today's picks (uses the freshly fetched scores)
+    tracker = save_picks_snapshot(stocks, tracker)
+    save_picks_tracker(tracker)
+    print(f"[PicksTracker] picks_tracker.json saved ({len(tracker)} entries).")
 
     new_buys, new_sells, buy_weakened, sell_cleared, notable = detect_changes(stocks, snapshot)
     all_buys, all_sells, all_holds = get_all_zones(stocks)
@@ -771,10 +1152,11 @@ def main():
 
     data_updated = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
     email_html = build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared,
-                              notable, all_buys, all_sells, all_holds, is_morning, data_updated)
+                              notable, all_buys, all_sells, all_holds, is_morning, data_updated,
+                              tracker=tracker)
     send_email(subject, email_html)
 
-    local_html = build_local_html(stocks, data_updated, is_morning)
+    local_html = build_local_html(stocks, data_updated, is_morning, tracker=tracker)
     with open(REPORT_FILE, "w") as f:
         f.write(local_html)
     print(f"[Cloud Emailer] 📄 latest_report.html saved")

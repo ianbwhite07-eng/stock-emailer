@@ -418,6 +418,80 @@
       }
     ],
     "voo_entry": 694.09,
+    "evaluated": true,
+    "picks_exit": {
+      "ENVA": 189.16,
+      "VIRT": 57.7,
+      "NWPX": 128.85,
+      "BFH": 101.71,
+      "JILL": 14.68,
+      "APP": 520.86,
+      "BE": 274.5,
+      "ATLC": 92.38,
+      "ECPG": 81.34,
+      "OMF": 57.67
+    },
+    "voo_exit": 681.95,
+    "picks_return_pct": -0.79,
+    "voo_return_pct": -1.75,
+    "beat_voo": true,
+    "evaluated_date": "2026-06-16"
+  },
+  {
+    "date": "2026-06-16",
+    "picks": [
+      {
+        "ticker": "VIRT",
+        "entry_price": 57.7,
+        "score": 8.3
+      },
+      {
+        "ticker": "JILL",
+        "entry_price": 14.68,
+        "score": 8.2
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 189.16,
+        "score": 8.2
+      },
+      {
+        "ticker": "NWPX",
+        "entry_price": 128.85,
+        "score": 7.9
+      },
+      {
+        "ticker": "BFH",
+        "entry_price": 101.71,
+        "score": 7.8
+      },
+      {
+        "ticker": "APP",
+        "entry_price": 520.86,
+        "score": 7.7
+      },
+      {
+        "ticker": "BE",
+        "entry_price": 274.5,
+        "score": 7.6
+      },
+      {
+        "ticker": "ATLC",
+        "entry_price": 92.38,
+        "score": 7.5
+      },
+      {
+        "ticker": "OMF",
+        "entry_price": 57.67,
+        "score": 7.4
+      },
+      {
+        "ticker": "LC",
+        "entry_price": 18.45,
+        "score": 7.4
+      }
+    ],
+    "voo_entry": 681.95,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

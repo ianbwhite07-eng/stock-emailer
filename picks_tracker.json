@@ -1306,6 +1306,80 @@
       }
     ],
     "voo_entry": 680.46,
+    "evaluated": true,
+    "picks_exit": {
+      "ENVA": 235.67,
+      "ECPG": 92.82,
+      "JILL": 15.97,
+      "LFST": 10.34,
+      "NWPX": 149.37,
+      "SLM": 26.11,
+      "CDNA": 29.28,
+      "VNCE": 7.79,
+      "ATLC": 104.27,
+      "ALGT": 114.2
+    },
+    "voo_exit": 681.01,
+    "picks_return_pct": 0.96,
+    "voo_return_pct": 0.08,
+    "beat_voo": true,
+    "evaluated_date": "2026-06-30"
+  },
+  {
+    "date": "2026-06-30",
+    "picks": [
+      {
+        "ticker": "ENVA",
+        "entry_price": 235.67,
+        "score": 8.6
+      },
+      {
+        "ticker": "ECPG",
+        "entry_price": 92.82,
+        "score": 8.5
+      },
+      {
+        "ticker": "JILL",
+        "entry_price": 15.97,
+        "score": 8.2
+      },
+      {
+        "ticker": "VNCE",
+        "entry_price": 7.79,
+        "score": 8.2
+      },
+      {
+        "ticker": "LFST",
+        "entry_price": 10.34,
+        "score": 8.2
+      },
+      {
+        "ticker": "NWPX",
+        "entry_price": 149.37,
+        "score": 8.0
+      },
+      {
+        "ticker": "SLM",
+        "entry_price": 26.11,
+        "score": 8.0
+      },
+      {
+        "ticker": "ALGT",
+        "entry_price": 114.2,
+        "score": 7.9
+      },
+      {
+        "ticker": "ATLC",
+        "entry_price": 104.27,
+        "score": 7.7
+      },
+      {
+        "ticker": "CDNA",
+        "entry_price": 29.28,
+        "score": 7.7
+      }
+    ],
+    "voo_entry": 681.01,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

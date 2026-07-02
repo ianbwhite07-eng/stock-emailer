@@ -1454,6 +1454,80 @@
       }
     ],
     "voo_entry": 686.81,
+    "evaluated": true,
+    "picks_exit": {
+      "JILL": 16.35,
+      "ENVA": 242.18,
+      "ECPG": 93.79,
+      "NWPX": 144.3,
+      "LFST": 11.43,
+      "SLM": 25.67,
+      "ALGT": 119.16,
+      "BFH": 105.37,
+      "CDNA": 29.25,
+      "VNCE": 6.73
+    },
+    "voo_exit": 685.46,
+    "picks_return_pct": 0.14,
+    "voo_return_pct": -0.2,
+    "beat_voo": true,
+    "evaluated_date": "2026-07-02"
+  },
+  {
+    "date": "2026-07-02",
+    "picks": [
+      {
+        "ticker": "JILL",
+        "entry_price": 16.35,
+        "score": 8.6
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 242.18,
+        "score": 8.6
+      },
+      {
+        "ticker": "VIRT",
+        "entry_price": 61.73,
+        "score": 8.3
+      },
+      {
+        "ticker": "ECPG",
+        "entry_price": 93.79,
+        "score": 8.2
+      },
+      {
+        "ticker": "SLM",
+        "entry_price": 25.67,
+        "score": 8.2
+      },
+      {
+        "ticker": "LFST",
+        "entry_price": 11.43,
+        "score": 8.2
+      },
+      {
+        "ticker": "ALGT",
+        "entry_price": 119.16,
+        "score": 7.9
+      },
+      {
+        "ticker": "BTSG",
+        "entry_price": 69.85,
+        "score": 7.5
+      },
+      {
+        "ticker": "NWPX",
+        "entry_price": 144.3,
+        "score": 7.5
+      },
+      {
+        "ticker": "CDNA",
+        "entry_price": 29.25,
+        "score": 7.4
+      }
+    ],
+    "voo_entry": 685.46,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

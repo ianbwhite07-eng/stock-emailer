@@ -140,17 +140,17 @@
     "price": 22.31
   },
   "SATS": {
-    "score_overall": 2.7,
+    "score_overall": 2.3,
     "score_short": 2,
     "score_mid": 2,
-    "score_long": 4,
+    "score_long": 3,
     "price": 101.49
   },
   "IRDM": {
-    "score_overall": 6.5,
-    "score_short": 8,
+    "score_overall": 5.9,
+    "score_short": 7,
     "score_mid": 6,
-    "score_long": 6,
+    "score_long": 5,
     "price": 53.75
   },
   "PAHC": {
@@ -217,8 +217,8 @@
     "price": 29.19
   },
   "NN": {
-    "score_overall": 2.1,
-    "score_short": 1,
+    "score_overall": 2.3,
+    "score_short": 2,
     "score_mid": 2,
     "score_long": 3,
     "price": 16.28
@@ -294,17 +294,17 @@
     "price": 4.14
   },
   "FSRL": {
-    "score_overall": 6.4,
-    "score_short": 8,
+    "score_overall": 5.8,
+    "score_short": 7,
     "score_mid": 5,
-    "score_long": 7,
+    "score_long": 6,
     "price": 18.6
   },
   "INR": {
-    "score_overall": 5.6,
+    "score_overall": 5.2,
     "score_short": 5,
     "score_mid": 3,
-    "score_long": 9,
+    "score_long": 8,
     "price": 12.5
   },
   "CTRA": {
@@ -385,8 +385,8 @@
     "price": 120.35
   },
   "MSFT": {
-    "score_overall": 6.8,
-    "score_short": 8,
+    "score_overall": 6.5,
+    "score_short": 7,
     "score_mid": 5,
     "score_long": 8,
     "price": 390.49
@@ -420,8 +420,8 @@
     "price": 85.51
   },
   "JPM": {
-    "score_overall": 6.2,
-    "score_short": 5,
+    "score_overall": 6.4,
+    "score_short": 6,
     "score_mid": 7,
     "score_long": 6,
     "price": 334.47

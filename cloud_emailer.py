@@ -530,6 +530,17 @@ def divider(label):
            letter-spacing:0.1em;text-transform:uppercase;color:#475569;">{label}</div>
     </td></tr>"""
 
+def universe_email_section(universe_picks):
+    """Render top market picks from the broad universe scan into email rows."""
+    if not universe_picks:
+        return ""
+    rows = email_sec(f"🌐 Top Market Picks — Full Market Scan ({len(universe_picks)})", "#1a1040")
+    for p in universe_picks:
+        # universe picks use change_5d; normalise to change_1d for email_row
+        row_d = {**p, "change_1d": p.get("change_5d", 0)}
+        rows += email_row(row_d)
+    return rows
+
 def horizon_rows(stocks, horizon_key, label, emoji):
     all_s  = list(stocks.values())
     buys   = sorted([d for d in all_s if classify(d.get(horizon_key)) == "buy"],  key=lambda x: x.get(horizon_key) or 0, reverse=True)
@@ -1091,7 +1102,7 @@ def picks_tracker_local_panel(tracker):
 # ─────────────────────────────────────────────
 
 def build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared, notable,
-                all_buys, all_sells, all_holds, is_morning, data_updated, tracker=None):
+                all_buys, all_sells, all_holds, is_morning, data_updated, tracker=None, universe_picks=None):
     period    = "🌅 Morning" if is_morning else "🌙 Evening"
     now_str   = datetime.now().strftime("%B %d, %Y — %I:%M %p UTC")
     total_chg = len(new_buys) + len(new_sells) + len(buy_weakened) + len(sell_cleared)
@@ -1137,8 +1148,9 @@ def build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared, notable
     overall_rows += email_sec(f"📋 Hold ({len(all_holds)})", "#1a1a2e")
     for d in all_holds: overall_rows += email_row(d)
 
-    change_summary = f"{total_chg} signal change{'s' if total_chg!=1 else ''}" if total_chg else "No signal changes since last report"
-    picks_section  = picks_tracker_email_section(tracker or [])
+    change_summary  = f"{total_chg} signal change{'s' if total_chg!=1 else ''}" if total_chg else "No signal changes since last report"
+    picks_section   = picks_tracker_email_section(tracker or [])
+    universe_section = universe_email_section(universe_picks or [])
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#0f172a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0;">
@@ -1154,7 +1166,8 @@ def build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared, notable
   <tr><td style="padding:0;">
     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:#0f172a;">
       {picks_section}
-      {divider("🔔 Signal Changes")}{TABLE_HDR}{chg_rows}
+      {divider("🌐 Top Market Picks")}{TABLE_HDR}{universe_section}
+      {divider("🔔 Signal Changes (Watchlist)")}{TABLE_HDR}{chg_rows}
       {divider("⚡ Short-Term (days–weeks)")}{TABLE_HDR}{horizon_rows(stocks,"score_short","Short-Term","⚡")}
       {divider("📊 Mid-Term (weeks–months)")}{TABLE_HDR}{horizon_rows(stocks,"score_mid","Mid-Term","📊")}
       {divider("🏦 Long-Term (months+)")}{TABLE_HDR}{horizon_rows(stocks,"score_long","Long-Term","🏦")}
@@ -1339,7 +1352,7 @@ def main():
     data_updated = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
     email_html = build_email(stocks, new_buys, new_sells, buy_weakened, sell_cleared,
                               notable, all_buys, all_sells, all_holds, is_morning, data_updated,
-                              tracker=tracker)
+                              tracker=tracker, universe_picks=universe_picks)
     send_email(subject, email_html)
 
     local_html = build_local_html(stocks, data_updated, is_morning, tracker=tracker)

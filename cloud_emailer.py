@@ -549,6 +549,168 @@ def horizon_rows(stocks, horizon_key, label, emoji):
 
 
 # ─────────────────────────────────────────────
+# UNIVERSE SCAN
+# ─────────────────────────────────────────────
+
+# Fallback broad universe used when Wikipedia fetch fails
+FALLBACK_UNIVERSE = [
+    # Mega cap
+    'AAPL','MSFT','NVDA','AMZN','GOOGL','META','TSLA','AVGO','BRK-B','JPM',
+    'V','MA','UNH','LLY','XOM','COST','HD','PG','JNJ','WMT',
+    # Tech / semis
+    'AMD','INTC','QCOM','TXN','AMAT','MU','LRCX','KLAC','SNPS','CDNS',
+    'ORCL','CSCO','IBM','HPQ','DELL','CRM','NOW','ADBE','INTU','PANW',
+    'CRWD','FTNT','ZS','DDOG','NET','SNOW','PLTR','MSTR','SMCI','ARM',
+    # Finance
+    'GS','MS','BAC','WFC','C','AXP','BLK','SCHW','COF','USB',
+    'PNC','TFC','SPGI','MCO','ICE','CME','HOOD','SOFI','AFRM','UPST',
+    # Healthcare / biotech
+    'ABBV','MRK','PFE','TMO','ABT','DHR','BMY','AMGN','GILD','REGN',
+    'VRTX','ISRG','MDT','SYK','BSX','ELV','CVS','CI','HCA','MRNA',
+    'HIMS','ACAD','RXRX','EXAS',
+    # Consumer
+    'TGT','LOW','MCD','SBUX','NKE','TJX','ROST','LULU','CMG','DKNG',
+    'ABNB','UBER','LYFT','DASH','PINS','SNAP','RDDT','RBLX','COIN',
+    # Energy
+    'CVX','COP','SLB','EOG','MPC','VLO','PSX','OXY','DVN','FANG',
+    # Industrials / transport
+    'CAT','DE','HON','GE','MMM','LMT','RTX','NOC','GD','BA',
+    'UPS','FDX','ODFL','CSX','NSC','UAL','DAL','AAL','JBLU',
+    # International / ADRs
+    'TSM','ASML','SONY','TM','BABA','JD','PDD','SE','MELI','NU',
+    'SHOP','SPOT','NFLX',
+    # Small / mid growth
+    'CELH','CAVA','APP','APLD','IONQ','ACHR','JOBY','LUNR','ASTS',
+    'ENVA','FCFS','EZPW','ATLC','ECPG','OMF','LC','BTSG',
+    # ETFs excluded from picks but included for universe diversity check
+    # (scoring will naturally rank them lower vs individual equities)
+]
+
+def get_scan_universe():
+    """Return S&P 500 tickers via Wikipedia, falling back to FALLBACK_UNIVERSE."""
+    try:
+        df = pd.read_html(
+            'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies',
+            attrs={'id': 'constituents'}
+        )[0]
+        tickers = df['Symbol'].str.replace('.', '-', regex=False).tolist()
+        # Supplement with growth/small-cap extras not in S&P 500
+        extras = [t for t in FALLBACK_UNIVERSE if t not in tickers]
+        universe = tickers + extras
+        print(f"[UniverseScan] {len(tickers)} S&P 500 + {len(extras)} extras = {len(universe)} total")
+        return universe
+    except Exception as e:
+        print(f"[UniverseScan] Wikipedia fetch failed ({e}), using fallback list ({len(FALLBACK_UNIVERSE)} tickers)")
+        return FALLBACK_UNIVERSE
+
+def scan_universe_for_picks(universe):
+    """Two-phase scan across a broad universe to find the highest-scoring picks.
+
+    Phase 1 — bulk yfinance download + technicals-only scoring for all tickers (fast).
+    Phase 2 — Finnhub + fundamentals enrichment for the top ~20 candidates only.
+    Returns up to 10 tickers with score_overall >= 7.
+    """
+    print(f"[UniverseScan] Phase 1: downloading prices for {len(universe)} tickers...")
+    try:
+        raw = yf.download(universe, period="3mo", progress=False, auto_adjust=True)
+        close = raw["Close"]
+        if isinstance(close, pd.Series):
+            close = close.to_frame(name=universe[0])
+        if isinstance(close.columns, pd.MultiIndex):
+            close.columns = close.columns.get_level_values(-1)
+        clean = close.dropna(how="all")
+    except Exception as e:
+        print(f"[UniverseScan] yfinance error: {e}")
+        return []
+
+    macro = fetch_macro()
+    vix_adj, credit_adj = get_macro_adjustments(macro)
+
+    candidates = []
+    for ticker in universe:
+        if ticker not in clean.columns:
+            continue
+        try:
+            s = clean[ticker].dropna()
+            if len(s) < 20:
+                continue
+            current = float(s.iloc[-1])
+            prev_5d = float(s.iloc[-6]) if len(s) >= 6 else float(s.iloc[0])
+            tech = get_technicals(s)
+            entry = {
+                "ticker":       ticker,
+                "price":        round(current, 2),
+                "change_5d":    round((current - prev_5d) / prev_5d * 100, 2) if prev_5d else 0,
+                **tech,
+                "earnings_trend":        "N/A",
+                "rating":                "N/A",
+                "insider_signal":        "neutral",
+                "sentiment_label":       "neutral",
+                "short_percent":         None,
+                "revenue_growth":        None,
+                "forward_pe":            None,
+                "held_pct_institutions": None,
+                "beta":                  None,
+                "is_etf":                False,
+                "macro_vix_adj":         vix_adj,
+                "macro_credit_adj":      credit_adj,
+            }
+            entry["score_short"]   = score_short(entry)
+            entry["score_mid"]     = score_mid(entry)
+            entry["score_long"]    = score_long(entry)
+            entry["score_overall"] = score_overall(entry)
+            if entry["score_overall"] >= 5.5:
+                candidates.append(entry)
+        except Exception:
+            continue
+
+    candidates.sort(key=lambda x: x["score_overall"], reverse=True)
+    top = candidates[:20]
+    print(f"[UniverseScan] Phase 1: {len(candidates)} scored ≥5.5, enriching top {len(top)} with Finnhub...")
+
+    if not top:
+        return []
+
+    # Phase 2: enrich top candidates with Finnhub + fundamentals
+    enriched = []
+    for entry in top:
+        ticker = entry["ticker"]
+        try:
+            fund      = fetch_fundamentals(ticker);  time.sleep(0.3)
+            earnings  = fetch_earnings(ticker);       time.sleep(0.5)
+            rating    = fetch_rating(ticker);         time.sleep(0.5)
+            insider   = fetch_insider(ticker);        time.sleep(0.5)
+            sentiment = fetch_sentiment(ticker);      time.sleep(0.3)
+            entry.update({
+                "earnings_trend":        earnings,
+                "rating":                rating["rating"],
+                "total_analysts":        rating.get("total_analysts", 0),
+                "insider_signal":        insider["signal"],
+                "sentiment_label":       sentiment["sentiment_label"],
+                "short_percent":         fund.get("short_percent"),
+                "revenue_growth":        fund.get("revenue_growth"),
+                "forward_pe":            fund.get("forward_pe"),
+                "held_pct_institutions": fund.get("held_pct_institutions"),
+                "beta":                  fund.get("beta"),
+                "is_etf":                fund.get("is_etf", False),
+            })
+            entry["score_short"]   = score_short(entry)
+            entry["score_mid"]     = score_mid(entry)
+            entry["score_long"]    = score_long(entry)
+            entry["score_overall"] = score_overall(entry)
+            enriched.append(entry)
+            print(f"  {ticker}: overall={entry['score_overall']} short={entry['score_short']} mid={entry['score_mid']} long={entry['score_long']}")
+        except Exception as e:
+            print(f"  [UniverseScan] Error enriching {ticker}: {e}")
+            enriched.append(entry)
+
+    enriched.sort(key=lambda x: x["score_overall"], reverse=True)
+    picks = [e for e in enriched if e["score_overall"] >= 7][:10]
+    print(f"[UniverseScan] Final picks ({len(picks)}): {[p['ticker'] for p in picks]}")
+    return picks
+
+
+# ─────────────────────────────────────────────
 # PICKS TRACKER (performance vs VOO)
 # ─────────────────────────────────────────────
 
@@ -558,22 +720,38 @@ def load_picks_tracker():
             return json.load(f)
     return []
 
-def save_picks_snapshot(stocks, tracker):
-    """Append today's picks + VOO entry to tracker. Skips if today already snapshotted."""
+def save_picks_snapshot(stocks, tracker, universe_picks=None):
+    """Append today's picks + VOO entry to tracker. Skips if today already snapshotted.
+
+    Prefers universe_picks (broad market scan) when >= 3 picks found; falls back
+    to the watchlist buys from `stocks`.
+    """
     today = datetime.utcnow().strftime("%Y-%m-%d")
     if any(e["date"] == today for e in tracker):
         return tracker
 
-    overall_buys = sorted(
-        [(t, d) for t, d in stocks.items()
-         if isinstance(d.get("score_overall"), (int, float)) and d["score_overall"] >= 7
-         and isinstance(d.get("price"), (int, float))],
-        key=lambda x: x[1]["score_overall"], reverse=True
-    )[:10]
-
-    if not overall_buys:
-        print(f"[PicksTracker] No buys (score>=7) today, skipping snapshot.")
-        return tracker
+    # Choose source: broad universe scan or watchlist fallback
+    if universe_picks and len(universe_picks) >= 3:
+        picks_list = [
+            {"ticker": p["ticker"], "entry_price": p["price"], "score": p["score_overall"]}
+            for p in universe_picks
+        ]
+        source = "universe"
+    else:
+        overall_buys = sorted(
+            [(t, d) for t, d in stocks.items()
+             if isinstance(d.get("score_overall"), (int, float)) and d["score_overall"] >= 7
+             and isinstance(d.get("price"), (int, float))],
+            key=lambda x: x[1]["score_overall"], reverse=True
+        )[:10]
+        if not overall_buys:
+            print(f"[PicksTracker] No buys (score>=7) today, skipping snapshot.")
+            return tracker
+        picks_list = [
+            {"ticker": t, "entry_price": d["price"], "score": d["score_overall"]}
+            for t, d in overall_buys
+        ]
+        source = "watchlist"
 
     voo_price = None
     try:
@@ -588,8 +766,8 @@ def save_picks_snapshot(stocks, tracker):
 
     snapshot = {
         "date": today,
-        "picks": [{"ticker": t, "entry_price": d["price"], "score": d["score_overall"]}
-                  for t, d in overall_buys],
+        "source": source,
+        "picks": picks_list,
         "voo_entry":        voo_price,
         "evaluated":        False,
         "picks_exit":       {},
@@ -601,7 +779,7 @@ def save_picks_snapshot(stocks, tracker):
     }
     tracker = tracker + [snapshot]
     tracker = tracker[-120:]  # cap at 4 months
-    print(f"[PicksTracker] Saved snapshot {today}: {len(snapshot['picks'])} picks, VOO @ ${voo_price}")
+    print(f"[PicksTracker] Saved snapshot {today} (source={source}): {len(picks_list)} picks, VOO @ ${voo_price}")
     return tracker
 
 def evaluate_picks_tracker(tracker):
@@ -1134,8 +1312,16 @@ def main():
     snapshot = load_snapshot()
     stocks   = fetch_all_data(watchlist)
 
-    # Snapshot today's picks (uses the freshly fetched scores)
-    tracker = save_picks_snapshot(stocks, tracker)
+    # Broad-market universe scan for picks tracker
+    universe_picks = []
+    try:
+        universe = get_scan_universe()
+        universe_picks = scan_universe_for_picks(universe)
+    except Exception as e:
+        print(f"[UniverseScan] Scan failed ({e}), falling back to watchlist picks.")
+
+    # Snapshot today's picks (prefers universe scan over watchlist)
+    tracker = save_picks_snapshot(stocks, tracker, universe_picks=universe_picks)
     save_picks_tracker(tracker)
     print(f"[PicksTracker] picks_tracker.json saved ({len(tracker)} entries).")
 

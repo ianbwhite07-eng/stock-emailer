@@ -144,7 +144,7 @@
     "score_short": 2,
     "score_mid": 2,
     "score_long": 3,
-    "price": 101.49
+    "price": 101.5
   },
   "IRDM": {
     "score_overall": 5.9,
@@ -154,9 +154,9 @@
     "price": 53.75
   },
   "PAHC": {
-    "score_overall": 5.4,
+    "score_overall": 4.6,
     "score_short": 7,
-    "score_mid": 4,
+    "score_mid": 2,
     "score_long": 6,
     "price": 33.26
   },
@@ -210,8 +210,8 @@
     "price": 102.21
   },
   "CDNA": {
-    "score_overall": 7.4,
-    "score_short": 7,
+    "score_overall": 7.2,
+    "score_short": 6,
     "score_mid": 8,
     "score_long": 7,
     "price": 29.19
@@ -294,10 +294,10 @@
     "price": 4.14
   },
   "FSRL": {
-    "score_overall": 5.8,
+    "score_overall": 6.2,
     "score_short": 7,
     "score_mid": 5,
-    "score_long": 6,
+    "score_long": 7,
     "price": 18.6
   },
   "INR": {
@@ -308,10 +308,10 @@
     "price": 12.5
   },
   "CTRA": {
-    "score_overall": 5.5,
-    "score_short": 3,
+    "score_overall": 5.7,
+    "score_short": 5,
     "score_mid": 5,
-    "score_long": 8,
+    "score_long": 7,
     "price": 32.56
   },
   "BSVN": {
@@ -350,8 +350,8 @@
     "price": 308.63
   },
   "AMZN": {
-    "score_overall": 4.5,
-    "score_short": 6,
+    "score_overall": 4.7,
+    "score_short": 7,
     "score_mid": 3,
     "score_long": 5,
     "price": 242.67
@@ -385,8 +385,8 @@
     "price": 120.35
   },
   "MSFT": {
-    "score_overall": 6.5,
-    "score_short": 7,
+    "score_overall": 6.8,
+    "score_short": 8,
     "score_mid": 5,
     "score_long": 8,
     "price": 390.49
@@ -420,8 +420,8 @@
     "price": 85.51
   },
   "JPM": {
-    "score_overall": 6.4,
-    "score_short": 6,
+    "score_overall": 6.2,
+    "score_short": 5,
     "score_mid": 7,
     "score_long": 6,
     "price": 334.47

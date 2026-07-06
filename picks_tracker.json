@@ -1751,6 +1751,81 @@
       }
     ],
     "voo_entry": 684.84,
+    "evaluated": true,
+    "picks_exit": {
+      "GE": 377.85,
+      "ENVA": 233.63,
+      "PANW": 356.37,
+      "DDOG": 257.08,
+      "SNOW": 262.39,
+      "DAL": 91.84,
+      "LLY": 1207.14,
+      "UAL": 133.3,
+      "AFRM": 85.82,
+      "MRNA": 81.46
+    },
+    "voo_exit": 689.51,
+    "picks_return_pct": 0.35,
+    "voo_return_pct": 0.68,
+    "beat_voo": false,
+    "evaluated_date": "2026-07-06"
+  },
+  {
+    "date": "2026-07-06",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "GE",
+        "entry_price": 378.01,
+        "score": 8.4
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 233.85,
+        "score": 8.4
+      },
+      {
+        "ticker": "PANW",
+        "entry_price": 356.58,
+        "score": 8.2
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 262.45,
+        "score": 7.8
+      },
+      {
+        "ticker": "UAL",
+        "entry_price": 133.21,
+        "score": 7.8
+      },
+      {
+        "ticker": "DAL",
+        "entry_price": 91.87,
+        "score": 7.8
+      },
+      {
+        "ticker": "RDDT",
+        "entry_price": 203.93,
+        "score": 7.7
+      },
+      {
+        "ticker": "DDOG",
+        "entry_price": 257.02,
+        "score": 7.5
+      },
+      {
+        "ticker": "AFRM",
+        "entry_price": 85.8,
+        "score": 7.4
+      },
+      {
+        "ticker": "MRNA",
+        "entry_price": 81.51,
+        "score": 7.3
+      }
+    ],
+    "voo_entry": 689.61,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

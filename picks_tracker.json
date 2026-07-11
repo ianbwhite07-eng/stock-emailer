@@ -2126,6 +2126,81 @@
       }
     ],
     "voo_entry": 690.69,
+    "evaluated": true,
+    "picks_exit": {
+      "AFRM": 83.42,
+      "ENVA": 238.09,
+      "ACAD": 26.22,
+      "DDOG": 257.54,
+      "SNOW": 261.45,
+      "IBM": 287.56,
+      "BTSG": 71.43,
+      "NET": 268.4,
+      "MPC": 283.74,
+      "DELL": 434.97
+    },
+    "voo_exit": 693.86,
+    "picks_return_pct": -1.57,
+    "voo_return_pct": 0.46,
+    "beat_voo": false,
+    "evaluated_date": "2026-07-11"
+  },
+  {
+    "date": "2026-07-11",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "AFRM",
+        "entry_price": 83.42,
+        "score": 8.1
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 238.09,
+        "score": 7.8
+      },
+      {
+        "ticker": "MU",
+        "entry_price": 979.3,
+        "score": 7.7
+      },
+      {
+        "ticker": "DDOG",
+        "entry_price": 257.54,
+        "score": 7.5
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 261.45,
+        "score": 7.5
+      },
+      {
+        "ticker": "IBM",
+        "entry_price": 287.56,
+        "score": 7.4
+      },
+      {
+        "ticker": "DELL",
+        "entry_price": 434.97,
+        "score": 7.3
+      },
+      {
+        "ticker": "BTSG",
+        "entry_price": 71.43,
+        "score": 7.3
+      },
+      {
+        "ticker": "ACAD",
+        "entry_price": 26.22,
+        "score": 7.2
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 283.74,
+        "score": 7.2
+      }
+    ],
+    "voo_entry": 693.86,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

@@ -2201,6 +2201,81 @@
       }
     ],
     "voo_entry": 693.86,
+    "evaluated": true,
+    "picks_exit": {
+      "AFRM": 82.72,
+      "ENVA": 235.38,
+      "MU": 934.13,
+      "DDOG": 262.18,
+      "SNOW": 271.45,
+      "IBM": 291.51,
+      "DELL": 427.06,
+      "BTSG": 70.38,
+      "ACAD": 25.6,
+      "MPC": 295.32
+    },
+    "voo_exit": 689.62,
+    "picks_return_pct": -0.12,
+    "voo_return_pct": -0.61,
+    "beat_voo": true,
+    "evaluated_date": "2026-07-13"
+  },
+  {
+    "date": "2026-07-13",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "AFRM",
+        "entry_price": 82.58,
+        "score": 8.1
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 270.92,
+        "score": 8.0
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 235.38,
+        "score": 7.8
+      },
+      {
+        "ticker": "DDOG",
+        "entry_price": 261.38,
+        "score": 7.5
+      },
+      {
+        "ticker": "META",
+        "entry_price": 660.61,
+        "score": 7.5
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 295.32,
+        "score": 7.3
+      },
+      {
+        "ticker": "ATLC",
+        "entry_price": 99.31,
+        "score": 7.2
+      },
+      {
+        "ticker": "NET",
+        "entry_price": 270.67,
+        "score": 7.2
+      },
+      {
+        "ticker": "PSX",
+        "entry_price": 196.06,
+        "score": 7.2
+      },
+      {
+        "ticker": "IBM",
+        "entry_price": 290.94,
+        "score": 7.2
+      }
+    ],
+    "voo_entry": 689.31,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

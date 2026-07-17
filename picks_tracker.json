@@ -2496,6 +2496,80 @@
       }
     ],
     "voo_entry": 693.8,
+    "evaluated": true,
+    "picks_exit": {
+      "AFRM": 79.84,
+      "SNOW": 270.02,
+      "PANW": 353.99,
+      "ENVA": 235.53,
+      "META": 664.54,
+      "BLK": 1087.05,
+      "MPC": 305.85,
+      "ATLC": 103.24,
+      "COF": 211.93
+    },
+    "voo_exit": 690.14,
+    "picks_return_pct": 0.16,
+    "voo_return_pct": -0.53,
+    "beat_voo": true,
+    "evaluated_date": "2026-07-17"
+  },
+  {
+    "date": "2026-07-17",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "TMO",
+        "entry_price": 543.19,
+        "score": 8.0
+      },
+      {
+        "ticker": "DHR",
+        "entry_price": 205.01,
+        "score": 7.8
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 235.53,
+        "score": 7.6
+      },
+      {
+        "ticker": "PANW",
+        "entry_price": 353.99,
+        "score": 7.5
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 270.02,
+        "score": 7.5
+      },
+      {
+        "ticker": "ATLC",
+        "entry_price": 103.24,
+        "score": 7.2
+      },
+      {
+        "ticker": "DDOG",
+        "entry_price": 262.32,
+        "score": 7.1
+      },
+      {
+        "ticker": "SPGI",
+        "entry_price": 457.38,
+        "score": 7.0
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 305.85,
+        "score": 7.0
+      },
+      {
+        "ticker": "BAC",
+        "entry_price": 61.49,
+        "score": 7.0
+      }
+    ],
+    "voo_entry": 690.14,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

@@ -2720,6 +2720,61 @@
       }
     ],
     "voo_entry": 685.98,
+    "evaluated": true,
+    "picks_exit": {
+      "ABBV": 253.38,
+      "PANW": 348.66,
+      "ENVA": 230.45,
+      "SNOW": 274.34,
+      "PSX": 208.8,
+      "NET": 272.42,
+      "ATLC": 97.91,
+      "CRWD": 198.49,
+      "BTSG": 70.5,
+      "VLO": 313.31
+    },
+    "voo_exit": 682.21,
+    "picks_return_pct": -1.45,
+    "voo_return_pct": -0.55,
+    "beat_voo": false,
+    "evaluated_date": "2026-07-21"
+  },
+  {
+    "date": "2026-07-21",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "ABBV",
+        "entry_price": 253.38,
+        "score": 7.9
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 230.45,
+        "score": 7.7
+      },
+      {
+        "ticker": "PANW",
+        "entry_price": 348.66,
+        "score": 7.5
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 274.34,
+        "score": 7.5
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 313.31,
+        "score": 7.0
+      },
+      {
+        "ticker": "ROST",
+        "entry_price": 235.78,
+        "score": 7.0
+      }
+    ],
+    "voo_entry": 682.21,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

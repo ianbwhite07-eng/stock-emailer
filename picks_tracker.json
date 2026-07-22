@@ -2775,6 +2775,77 @@
       }
     ],
     "voo_entry": 682.21,
+    "evaluated": true,
+    "picks_exit": {
+      "ABBV": 256.1,
+      "ENVA": 228.46,
+      "PANW": 342.15,
+      "SNOW": 271.73,
+      "VLO": 314.8,
+      "ROST": 235.81
+    },
+    "voo_exit": 687.87,
+    "picks_return_pct": -0.35,
+    "voo_return_pct": 0.83,
+    "beat_voo": false,
+    "evaluated_date": "2026-07-22"
+  },
+  {
+    "date": "2026-07-22",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "ABBV",
+        "entry_price": 256.1,
+        "score": 8.1
+      },
+      {
+        "ticker": "MRK",
+        "entry_price": 126.26,
+        "score": 7.5
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 319.76,
+        "score": 7.2
+      },
+      {
+        "ticker": "PSX",
+        "entry_price": 212.27,
+        "score": 7.2
+      },
+      {
+        "ticker": "ACAD",
+        "entry_price": 25.43,
+        "score": 7.1
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 314.8,
+        "score": 7.0
+      },
+      {
+        "ticker": "BTSG",
+        "entry_price": 72.56,
+        "score": 7.0
+      },
+      {
+        "ticker": "CVS",
+        "entry_price": 110.6,
+        "score": 7.0
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 271.73,
+        "score": 7.0
+      },
+      {
+        "ticker": "ROST",
+        "entry_price": 235.81,
+        "score": 7.0
+      }
+    ],
+    "voo_entry": 687.87,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

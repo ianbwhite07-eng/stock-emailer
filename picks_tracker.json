@@ -2846,6 +2846,76 @@
       }
     ],
     "voo_entry": 687.87,
+    "evaluated": true,
+    "picks_exit": {
+      "ABBV": 253.3,
+      "MRK": 127.47,
+      "MPC": 315.82,
+      "PSX": 211.41,
+      "ACAD": 24.96,
+      "VLO": 310.92,
+      "BTSG": 69.74,
+      "CVS": 108.08,
+      "SNOW": 267.8,
+      "ROST": 238.21
+    },
+    "voo_exit": 687.03,
+    "picks_return_pct": -1.14,
+    "voo_return_pct": -0.12,
+    "beat_voo": false,
+    "evaluated_date": "2026-07-23"
+  },
+  {
+    "date": "2026-07-23",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "ABBV",
+        "entry_price": 253.3,
+        "score": 8.1
+      },
+      {
+        "ticker": "MRK",
+        "entry_price": 127.47,
+        "score": 7.8
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 315.82,
+        "score": 7.6
+      },
+      {
+        "ticker": "EOG",
+        "entry_price": 144.0,
+        "score": 7.6
+      },
+      {
+        "ticker": "NET",
+        "entry_price": 268.98,
+        "score": 7.2
+      },
+      {
+        "ticker": "PSX",
+        "entry_price": 211.41,
+        "score": 7.2
+      },
+      {
+        "ticker": "DELL",
+        "entry_price": 441.8,
+        "score": 7.0
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 267.8,
+        "score": 7.0
+      },
+      {
+        "ticker": "ROST",
+        "entry_price": 238.21,
+        "score": 7.0
+      }
+    ],
+    "voo_entry": 687.03,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

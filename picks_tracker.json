@@ -2985,6 +2985,79 @@
       }
     ],
     "voo_entry": 678.61,
+    "evaluated": true,
+    "picks_exit": {
+      "TMO": 568.26,
+      "RTX": 212.79,
+      "MU": 920.95,
+      "DELL": 437.5,
+      "MPC": 309.24,
+      "VLO": 302.5,
+      "SNOW": 268.06,
+      "NET": 262.15
+    },
+    "voo_exit": 679.14,
+    "picks_return_pct": -0.9,
+    "voo_return_pct": 0.08,
+    "beat_voo": false,
+    "evaluated_date": "2026-07-25"
+  },
+  {
+    "date": "2026-07-25",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "TMO",
+        "entry_price": 568.26,
+        "score": 8.0
+      },
+      {
+        "ticker": "ABBV",
+        "entry_price": 259.36,
+        "score": 7.9
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 237.27,
+        "score": 7.9
+      },
+      {
+        "ticker": "RTX",
+        "entry_price": 212.79,
+        "score": 7.8
+      },
+      {
+        "ticker": "JPM",
+        "entry_price": 353.21,
+        "score": 7.4
+      },
+      {
+        "ticker": "DELL",
+        "entry_price": 437.5,
+        "score": 7.3
+      },
+      {
+        "ticker": "PSX",
+        "entry_price": 206.77,
+        "score": 7.2
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 309.24,
+        "score": 7.1
+      },
+      {
+        "ticker": "BTSG",
+        "entry_price": 72.91,
+        "score": 7.0
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 268.06,
+        "score": 7.0
+      }
+    ],
+    "voo_entry": 679.14,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

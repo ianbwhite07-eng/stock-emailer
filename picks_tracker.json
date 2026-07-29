@@ -3208,6 +3208,81 @@
       }
     ],
     "voo_entry": 679.31,
+    "evaluated": true,
+    "picks_exit": {
+      "ENVA": 249.04,
+      "RTX": 218.58,
+      "ABBV": 263.2,
+      "TMO": 576.41,
+      "JPM": 357.31,
+      "DELL": 392.1,
+      "LLY": 1220.66,
+      "VLO": 298.88,
+      "MPC": 306.05,
+      "NET": 264.1
+    },
+    "voo_exit": 680.96,
+    "picks_return_pct": -0.61,
+    "voo_return_pct": 0.24,
+    "beat_voo": false,
+    "evaluated_date": "2026-07-29"
+  },
+  {
+    "date": "2026-07-29",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "RTX",
+        "entry_price": 218.58,
+        "score": 8.5
+      },
+      {
+        "ticker": "TMO",
+        "entry_price": 576.41,
+        "score": 8.2
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 249.04,
+        "score": 8.1
+      },
+      {
+        "ticker": "ABBV",
+        "entry_price": 263.2,
+        "score": 8.1
+      },
+      {
+        "ticker": "ECPG",
+        "entry_price": 95.9,
+        "score": 7.8
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 306.05,
+        "score": 7.5
+      },
+      {
+        "ticker": "JPM",
+        "entry_price": 357.31,
+        "score": 7.4
+      },
+      {
+        "ticker": "ABT",
+        "entry_price": 107.27,
+        "score": 7.2
+      },
+      {
+        "ticker": "ACAD",
+        "entry_price": 26.01,
+        "score": 7.1
+      },
+      {
+        "ticker": "ROST",
+        "entry_price": 251.03,
+        "score": 7.0
+      }
+    ],
+    "voo_entry": 680.96,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

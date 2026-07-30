@@ -3283,6 +3283,81 @@
       }
     ],
     "voo_entry": 680.96,
+    "evaluated": true,
+    "picks_exit": {
+      "RTX": 215.25,
+      "TMO": 576.46,
+      "ENVA": 244.71,
+      "ABBV": 263.3,
+      "ECPG": 93.83,
+      "MPC": 308.72,
+      "JPM": 344.71,
+      "ABT": 108.0,
+      "ACAD": 26.34,
+      "ROST": 251.96
+    },
+    "voo_exit": 670.63,
+    "picks_return_pct": -0.57,
+    "voo_return_pct": -1.52,
+    "beat_voo": true,
+    "evaluated_date": "2026-07-30"
+  },
+  {
+    "date": "2026-07-30",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "ENVA",
+        "entry_price": 244.71,
+        "score": 8.4
+      },
+      {
+        "ticker": "TMO",
+        "entry_price": 576.46,
+        "score": 8.2
+      },
+      {
+        "ticker": "RTX",
+        "entry_price": 215.25,
+        "score": 7.5
+      },
+      {
+        "ticker": "ICE",
+        "entry_price": 154.28,
+        "score": 7.4
+      },
+      {
+        "ticker": "DASH",
+        "entry_price": 193.53,
+        "score": 7.3
+      },
+      {
+        "ticker": "ABT",
+        "entry_price": 108.0,
+        "score": 7.2
+      },
+      {
+        "ticker": "ACAD",
+        "entry_price": 26.34,
+        "score": 7.1
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 282.9,
+        "score": 7.0
+      },
+      {
+        "ticker": "NET",
+        "entry_price": 270.38,
+        "score": 7.0
+      },
+      {
+        "ticker": "ROST",
+        "entry_price": 251.96,
+        "score": 7.0
+      }
+    ],
+    "voo_entry": 670.63,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

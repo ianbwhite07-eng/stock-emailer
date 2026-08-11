@@ -4026,6 +4026,80 @@
       }
     ],
     "voo_entry": 711.56,
+    "evaluated": true,
+    "picks_exit": {
+      "SNOW": 334.7,
+      "TMO": 599.69,
+      "PANW": 385.04,
+      "VLO": 314.95,
+      "PSX": 215.52,
+      "REGN": 808.05,
+      "RTX": 224.12,
+      "ACAD": 29.39,
+      "ZS": 176.68
+    },
+    "voo_exit": 710.65,
+    "picks_return_pct": 0.66,
+    "voo_return_pct": -0.13,
+    "beat_voo": true,
+    "evaluated_date": "2026-08-11"
+  },
+  {
+    "date": "2026-08-11",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "TMO",
+        "entry_price": 599.69,
+        "score": 8.5
+      },
+      {
+        "ticker": "PSX",
+        "entry_price": 215.52,
+        "score": 8.4
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 334.7,
+        "score": 8.2
+      },
+      {
+        "ticker": "PANW",
+        "entry_price": 385.04,
+        "score": 8.0
+      },
+      {
+        "ticker": "REGN",
+        "entry_price": 808.05,
+        "score": 7.8
+      },
+      {
+        "ticker": "RTX",
+        "entry_price": 224.12,
+        "score": 7.8
+      },
+      {
+        "ticker": "PFE",
+        "entry_price": 27.05,
+        "score": 7.8
+      },
+      {
+        "ticker": "MSFT",
+        "entry_price": 506.06,
+        "score": 7.5
+      },
+      {
+        "ticker": "ADBE",
+        "entry_price": 272.96,
+        "score": 7.5
+      },
+      {
+        "ticker": "ACAD",
+        "entry_price": 29.39,
+        "score": 7.5
+      }
+    ],
+    "voo_entry": 710.65,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

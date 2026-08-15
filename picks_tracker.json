@@ -4325,6 +4325,81 @@
       }
     ],
     "voo_entry": 714.95,
+    "evaluated": true,
+    "picks_exit": {
+      "PSX": 233.61,
+      "VLO": 341.67,
+      "MSFT": 495.4,
+      "SNOW": 328.92,
+      "REGN": 803.48,
+      "MPC": 355.42,
+      "ENVA": 265.45,
+      "ZS": 183.6,
+      "NET": 315.78,
+      "CRM": 196.21
+    },
+    "voo_exit": 713.61,
+    "picks_return_pct": -1.15,
+    "voo_return_pct": -0.19,
+    "beat_voo": false,
+    "evaluated_date": "2026-08-15"
+  },
+  {
+    "date": "2026-08-15",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "PSX",
+        "entry_price": 233.61,
+        "score": 8.9
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 341.67,
+        "score": 8.6
+      },
+      {
+        "ticker": "MSFT",
+        "entry_price": 495.4,
+        "score": 8.6
+      },
+      {
+        "ticker": "ENVA",
+        "entry_price": 265.45,
+        "score": 8.3
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 328.92,
+        "score": 8.0
+      },
+      {
+        "ticker": "ABT",
+        "entry_price": 111.25,
+        "score": 7.9
+      },
+      {
+        "ticker": "REGN",
+        "entry_price": 803.48,
+        "score": 7.9
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 355.42,
+        "score": 7.9
+      },
+      {
+        "ticker": "BLK",
+        "entry_price": 1173.73,
+        "score": 7.9
+      },
+      {
+        "ticker": "NU",
+        "entry_price": 15.23,
+        "score": 7.9
+      }
+    ],
+    "voo_entry": 713.61,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

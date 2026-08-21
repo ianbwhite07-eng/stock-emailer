@@ -4700,6 +4700,81 @@
       }
     ],
     "voo_entry": 706.91,
+    "evaluated": true,
+    "picks_exit": {
+      "VLO": 341.51,
+      "PSX": 240.0,
+      "CRM": 205.43,
+      "INTU": 361.87,
+      "REGN": 826.64,
+      "ZS": 174.95,
+      "MPC": 358.23,
+      "COP": 134.89,
+      "MSFT": 481.15,
+      "ADBE": 272.22
+    },
+    "voo_exit": 701.01,
+    "picks_return_pct": -0.79,
+    "voo_return_pct": -0.83,
+    "beat_voo": true,
+    "evaluated_date": "2026-08-21"
+  },
+  {
+    "date": "2026-08-21",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "PSX",
+        "entry_price": 240.0,
+        "score": 8.7
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 341.51,
+        "score": 8.2
+      },
+      {
+        "ticker": "COP",
+        "entry_price": 134.89,
+        "score": 8.1
+      },
+      {
+        "ticker": "MSFT",
+        "entry_price": 481.15,
+        "score": 8.1
+      },
+      {
+        "ticker": "TMO",
+        "entry_price": 627.55,
+        "score": 7.9
+      },
+      {
+        "ticker": "REGN",
+        "entry_price": 826.64,
+        "score": 7.9
+      },
+      {
+        "ticker": "CRM",
+        "entry_price": 205.43,
+        "score": 7.9
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 321.29,
+        "score": 7.5
+      },
+      {
+        "ticker": "INTU",
+        "entry_price": 361.87,
+        "score": 7.4
+      },
+      {
+        "ticker": "PLTR",
+        "entry_price": 173.96,
+        "score": 7.4
+      }
+    ],
+    "voo_entry": 701.01,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

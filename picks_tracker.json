@@ -4775,6 +4775,81 @@
       }
     ],
     "voo_entry": 701.01,
+    "evaluated": true,
+    "picks_exit": {
+      "PSX": 242.87,
+      "VLO": 348.86,
+      "COP": 134.87,
+      "MSFT": 483.24,
+      "TMO": 629.27,
+      "REGN": 834.04,
+      "CRM": 209.17,
+      "SNOW": 332.78,
+      "INTU": 367.0,
+      "PLTR": 179.94
+    },
+    "voo_exit": 703.71,
+    "picks_return_pct": 1.52,
+    "voo_return_pct": 0.39,
+    "beat_voo": true,
+    "evaluated_date": "2026-08-22"
+  },
+  {
+    "date": "2026-08-22",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "PSX",
+        "entry_price": 242.87,
+        "score": 8.7
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 348.86,
+        "score": 8.2
+      },
+      {
+        "ticker": "CRM",
+        "entry_price": 209.17,
+        "score": 7.9
+      },
+      {
+        "ticker": "TMO",
+        "entry_price": 629.27,
+        "score": 7.7
+      },
+      {
+        "ticker": "REGN",
+        "entry_price": 834.04,
+        "score": 7.7
+      },
+      {
+        "ticker": "INTU",
+        "entry_price": 367.0,
+        "score": 7.4
+      },
+      {
+        "ticker": "PLTR",
+        "entry_price": 179.94,
+        "score": 7.4
+      },
+      {
+        "ticker": "ACAD",
+        "entry_price": 29.5,
+        "score": 7.4
+      },
+      {
+        "ticker": "ADBE",
+        "entry_price": 275.3,
+        "score": 7.4
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 360.72,
+        "score": 7.4
+      }
+    ],
+    "voo_entry": 703.71,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

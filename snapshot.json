@@ -1,59 +1,59 @@
 {
   "ALGT": {
-    "score_overall": 4.2,
-    "score_short": 1,
+    "score_overall": 4.5,
+    "score_short": 2,
     "score_mid": 3,
     "score_long": 8,
-    "price": 81.63
+    "price": 81.97
   },
   "ECPG": {
     "score_overall": 7.6,
     "score_short": 5,
     "score_mid": 8,
     "score_long": 9,
-    "price": 103.16
+    "price": 102.48
   },
   "JILL": {
-    "score_overall": 8.1,
-    "score_short": 7,
+    "score_overall": 7.6,
+    "score_short": 5,
     "score_mid": 7,
     "score_long": 10,
-    "price": 20.01
+    "price": 19.54
   },
   "ENVA": {
-    "score_overall": 6.7,
-    "score_short": 4,
+    "score_overall": 6.8,
+    "score_short": 3,
     "score_mid": 9,
-    "score_long": 6,
-    "price": 247.66
+    "score_long": 7,
+    "price": 245.11
   },
   "OMF": {
-    "score_overall": 6.7,
-    "score_short": 4,
-    "score_mid": 8,
+    "score_overall": 6.5,
+    "score_short": 5,
+    "score_mid": 7,
     "score_long": 7,
-    "price": 62.89
+    "price": 62.97
   },
   "FCFS": {
     "score_overall": 7.3,
     "score_short": 8,
     "score_mid": 8,
     "score_long": 6,
-    "price": 236.43
+    "price": 233.7
   },
   "EZPW": {
     "score_overall": 6.2,
     "score_short": 7,
     "score_mid": 6,
     "score_long": 6,
-    "price": 35.05
+    "price": 34.69
   },
   "ATLC": {
-    "score_overall": 5.3,
-    "score_short": 2,
+    "score_overall": 5.6,
+    "score_short": 3,
     "score_mid": 6,
     "score_long": 7,
-    "price": 95.15
+    "price": 95.51
   },
   "LC": {
     "score_overall": 4.7,
@@ -67,77 +67,77 @@
     "score_short": 6,
     "score_mid": 5,
     "score_long": 8,
-    "price": 5.31
+    "price": 5.36
   },
   "BTSG": {
-    "score_overall": 4.5,
-    "score_short": 5,
+    "score_overall": 4.3,
+    "score_short": 4,
     "score_mid": 3,
     "score_long": 6,
-    "price": 59.49
+    "price": 58.2
   },
   "ASTS": {
-    "score_overall": 2.4,
-    "score_short": 1,
+    "score_overall": 2.9,
+    "score_short": 3,
     "score_mid": 1,
     "score_long": 5,
-    "price": 62.35
+    "price": 62.13
   },
   "BE": {
-    "score_overall": 4.3,
-    "score_short": 1,
+    "score_overall": 4.8,
+    "score_short": 3,
     "score_mid": 5,
     "score_long": 6,
-    "price": 204.02
+    "price": 213.41
   },
   "LUMN": {
-    "score_overall": 3.1,
-    "score_short": 2,
+    "score_overall": 3.6,
+    "score_short": 4,
     "score_mid": 3,
     "score_long": 4,
-    "price": 5.67
+    "price": 5.72
   },
   "NWPX": {
-    "score_overall": 4.3,
-    "score_short": 1,
+    "score_overall": 4.8,
+    "score_short": 3,
     "score_mid": 4,
     "score_long": 7,
-    "price": 110.51
+    "price": 110.52
   },
   "LCUT": {
-    "score_overall": 6.0,
-    "score_short": 5,
+    "score_overall": 5.8,
+    "score_short": 4,
     "score_mid": 5,
     "score_long": 8,
-    "price": 9.48
+    "price": 9.2
   },
   "AFYA": {
     "score_overall": 5.3,
     "score_short": 5,
     "score_mid": 5,
     "score_long": 6,
-    "price": 14.22
+    "price": 14.21
   },
   "ALTO": {
-    "score_overall": 4.5,
-    "score_short": 2,
+    "score_overall": 4.3,
+    "score_short": 1,
     "score_mid": 4,
     "score_long": 7,
-    "price": 4.19
+    "price": 4.11
   },
   "PRAA": {
     "score_overall": 7.6,
     "score_short": 5,
     "score_mid": 8,
     "score_long": 9,
-    "price": 20.17
+    "price": 19.73
   },
   "INVA": {
     "score_overall": 5.5,
     "score_short": 6,
     "score_mid": 3,
     "score_long": 8,
-    "price": 21.03
+    "price": 21.02
   },
   "SATS": {
     "score_overall": 4.0,
@@ -147,165 +147,165 @@
     "price": 92.03
   },
   "IRDM": {
-    "score_overall": 5.2,
-    "score_short": 3,
+    "score_overall": 5.4,
+    "score_short": 4,
     "score_mid": 5,
     "score_long": 7,
-    "price": 47.3
+    "price": 47.08
   },
   "PAHC": {
     "score_overall": 6.6,
     "score_short": 4,
     "score_mid": 7,
     "score_long": 8,
-    "price": 35.31
+    "price": 35.61
   },
   "SHIP": {
     "score_overall": 7.8,
     "score_short": 7,
     "score_mid": 10,
     "score_long": 6,
-    "price": 17.82
+    "price": 17.68
   },
   "BODI": {
-    "score_overall": 3.2,
-    "score_short": 1,
+    "score_overall": 3.5,
+    "score_short": 2,
     "score_mid": 3,
     "score_long": 5,
-    "price": 6.09
+    "price": 6.17
   },
   "NTGR": {
-    "score_overall": 4.9,
-    "score_short": 0,
+    "score_overall": 5.4,
+    "score_short": 2,
     "score_mid": 7,
     "score_long": 6,
-    "price": 20.72
+    "price": 21.07
   },
   "HIMS": {
     "score_overall": 5.2,
     "score_short": 6,
     "score_mid": 4,
     "score_long": 6,
-    "price": 31.08
+    "price": 32.45
   },
   "IONQ": {
-    "score_overall": 3.9,
-    "score_short": 2,
+    "score_overall": 4.3,
+    "score_short": 4,
     "score_mid": 4,
     "score_long": 5,
-    "price": 41.06
+    "price": 42.01
   },
   "RKLB": {
-    "score_overall": 3.6,
+    "score_overall": 4.1,
     "score_short": 1,
-    "score_mid": 5,
+    "score_mid": 6,
     "score_long": 4,
-    "price": 68.28
+    "price": 67.43
   },
   "BFH": {
-    "score_overall": 5.7,
-    "score_short": 3,
+    "score_overall": 6.2,
+    "score_short": 5,
     "score_mid": 7,
     "score_long": 6,
-    "price": 105.19
+    "price": 107.87
   },
   "CDNA": {
-    "score_overall": 7.2,
-    "score_short": 6,
+    "score_overall": 7.4,
+    "score_short": 7,
     "score_mid": 8,
     "score_long": 7,
-    "price": 47.5
+    "price": 49.8
   },
   "NN": {
     "score_overall": 4.0,
     "score_short": 4,
     "score_mid": 5,
     "score_long": 3,
-    "price": 15.79
+    "price": 15.89
   },
   "ORCL": {
     "score_overall": 5.0,
     "score_short": 5,
     "score_mid": 5,
     "score_long": 5,
-    "price": 142.45
+    "price": 145.26
   },
   "GCT": {
-    "score_overall": 7.9,
-    "score_short": 6,
+    "score_overall": 8.2,
+    "score_short": 7,
     "score_mid": 10,
     "score_long": 7,
-    "price": 50.51
+    "price": 51.31
   },
   "SLM": {
-    "score_overall": 6.3,
-    "score_short": 3,
+    "score_overall": 6.6,
+    "score_short": 4,
     "score_mid": 6,
     "score_long": 9,
-    "price": 26.34
+    "price": 26.39
   },
   "PRTS": {
     "score_overall": 5.6,
     "score_short": 7,
     "score_mid": 6,
     "score_long": 4,
-    "price": 6.57
+    "price": 6.5
   },
   "ESEA": {
-    "score_overall": 5.7,
-    "score_short": 5,
+    "score_overall": 5.9,
+    "score_short": 6,
     "score_mid": 5,
     "score_long": 7,
-    "price": 76.79
+    "price": 76.2
   },
   "VNCE": {
-    "score_overall": 6.2,
-    "score_short": 5,
+    "score_overall": 6.4,
+    "score_short": 6,
     "score_mid": 7,
     "score_long": 6,
     "price": 6.3
   },
   "SSL": {
-    "score_overall": 5.2,
-    "score_short": 6,
+    "score_overall": 4.8,
+    "score_short": 4,
     "score_mid": 5,
     "score_long": 5,
-    "price": 12.27
+    "price": 11.45
   },
   "MPC": {
-    "score_overall": 7.4,
-    "score_short": 7,
+    "score_overall": 7.7,
+    "score_short": 8,
     "score_mid": 8,
     "score_long": 7,
-    "price": 362.52
+    "price": 358.62
   },
   "LFST": {
-    "score_overall": 7.2,
-    "score_short": 6,
+    "score_overall": 7.4,
+    "score_short": 7,
     "score_mid": 9,
     "score_long": 6,
-    "price": 12.16
+    "price": 12.14
   },
   "IDN": {
-    "score_overall": 4.5,
-    "score_short": 2,
+    "score_overall": 4.3,
+    "score_short": 1,
     "score_mid": 4,
     "score_long": 7,
-    "price": 2.89
+    "price": 2.86
   },
   "FSRL": {
-    "score_overall": 5.8,
+    "score_overall": 5.5,
     "score_short": 4,
     "score_mid": 6,
-    "score_long": 7,
-    "price": 19.65
+    "score_long": 6,
+    "price": 19.7
   },
   "INR": {
-    "score_overall": 7.8,
-    "score_short": 9,
+    "score_overall": 7.0,
+    "score_short": 7,
     "score_mid": 6,
-    "score_long": 9,
-    "price": 14.89
+    "score_long": 8,
+    "price": 14.5
   },
   "CTRA": {
     "score_overall": 5.3,
@@ -315,115 +315,115 @@
     "price": "N/A"
   },
   "BSVN": {
-    "score_overall": 5.6,
-    "score_short": 6,
+    "score_overall": 5.8,
+    "score_short": 7,
     "score_mid": 5,
     "score_long": 6,
-    "price": 52.16
+    "price": 52.13
   },
   "TTE": {
     "score_overall": 6.8,
     "score_short": 6,
     "score_mid": 7,
     "score_long": 7,
-    "price": 89.35
+    "price": 88.18
   },
   "VIRT": {
-    "score_overall": 8.9,
-    "score_short": 9,
+    "score_overall": 8.4,
+    "score_short": 7,
     "score_mid": 8,
     "score_long": 10,
-    "price": 66.29
+    "price": 64.82
   },
   "VCX": {
-    "score_overall": 3.9,
-    "score_short": 7,
+    "score_overall": 3.7,
+    "score_short": 6,
     "score_mid": 2,
     "score_long": 4,
-    "price": 44.62
+    "price": 44.37
   },
   "AAPL": {
     "score_overall": 5.0,
     "score_short": 5,
     "score_mid": 5,
     "score_long": 5,
-    "price": 310.34
+    "price": 309.53
   },
   "AMZN": {
     "score_overall": 5.2,
     "score_short": 4,
     "score_mid": 6,
     "score_long": 5,
-    "price": 262.07
+    "price": 260.38
   },
   "APP": {
-    "score_overall": 4.1,
-    "score_short": 0,
+    "score_overall": 4.3,
+    "score_short": 1,
     "score_mid": 5,
     "score_long": 6,
-    "price": 298.59
+    "price": 308.68
   },
   "CEG": {
     "score_overall": 6.3,
     "score_short": 6,
     "score_mid": 5,
     "score_long": 8,
-    "price": 273.43
+    "price": 274.81
   },
   "CVNA": {
-    "score_overall": 5.8,
-    "score_short": 5,
+    "score_overall": 6.0,
+    "score_short": 6,
     "score_mid": 6,
     "score_long": 6,
-    "price": 72.33
+    "price": 75.14
   },
   "INTC": {
-    "score_overall": 4.3,
-    "score_short": 1,
+    "score_overall": 4.6,
+    "score_short": 2,
     "score_mid": 5,
     "score_long": 6,
-    "price": 87.26
+    "price": 88.09
   },
   "MSFT": {
     "score_overall": 7.4,
     "score_short": 4,
     "score_mid": 9,
     "score_long": 8,
-    "price": 487.31
+    "price": 488.89
   },
   "NVDA": {
-    "score_overall": 6.0,
-    "score_short": 4,
+    "score_overall": 5.7,
+    "score_short": 3,
     "score_mid": 8,
     "score_long": 5,
-    "price": 208.48
+    "price": 211.19
   },
   "OKLO": {
-    "score_overall": 2.6,
-    "score_short": 3,
+    "score_overall": 3.3,
+    "score_short": 6,
     "score_mid": 2,
     "score_long": 3,
-    "price": 39.69
+    "price": 42.78
   },
   "SMHX": {
-    "score_overall": 3.8,
-    "score_short": 2,
+    "score_overall": 4.5,
+    "score_short": 5,
     "score_mid": 3,
     "score_long": 6,
-    "price": 53.77
+    "price": 54.96
   },
   "WFC": {
     "score_overall": 5.9,
     "score_short": 3,
     "score_mid": 5,
     "score_long": 9,
-    "price": 84.72
+    "price": 84.27
   },
   "JPM": {
     "score_overall": 7.2,
     "score_short": 5,
     "score_mid": 8,
     "score_long": 8,
-    "price": 356.39
+    "price": 354.88
   }
 }

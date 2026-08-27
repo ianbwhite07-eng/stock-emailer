@@ -5075,6 +5075,81 @@
       }
     ],
     "voo_entry": 704.02,
+    "evaluated": true,
+    "picks_exit": {
+      "PSX": 242.23,
+      "VLO": 348.03,
+      "CRM": 205.62,
+      "TMO": 633.71,
+      "MPC": 362.27,
+      "PFE": 28.3,
+      "MRK": 153.1,
+      "ICE": 161.92,
+      "ADBE": 273.47,
+      "REGN": 814.79
+    },
+    "voo_exit": 704.2,
+    "picks_return_pct": 0.2,
+    "voo_return_pct": 0.03,
+    "beat_voo": true,
+    "evaluated_date": "2026-08-27"
+  },
+  {
+    "date": "2026-08-27",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "PSX",
+        "entry_price": 242.23,
+        "score": 8.4
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 348.03,
+        "score": 8.2
+      },
+      {
+        "ticker": "TMO",
+        "entry_price": 633.71,
+        "score": 7.7
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 362.27,
+        "score": 7.7
+      },
+      {
+        "ticker": "MSFT",
+        "entry_price": 496.37,
+        "score": 7.6
+      },
+      {
+        "ticker": "CRM",
+        "entry_price": 205.62,
+        "score": 7.6
+      },
+      {
+        "ticker": "TGT",
+        "entry_price": 164.04,
+        "score": 7.3
+      },
+      {
+        "ticker": "CELH",
+        "entry_price": 35.23,
+        "score": 7.3
+      },
+      {
+        "ticker": "ICE",
+        "entry_price": 161.92,
+        "score": 7.3
+      },
+      {
+        "ticker": "NOW",
+        "entry_price": 125.8,
+        "score": 7.1
+      }
+    ],
+    "voo_entry": 704.2,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

@@ -203,8 +203,8 @@
     "price": 67.53
   },
   "BFH": {
-    "score_overall": 6.9,
-    "score_short": 5,
+    "score_overall": 7.1,
+    "score_short": 6,
     "score_mid": 7,
     "score_long": 8,
     "price": 108.03
@@ -266,8 +266,8 @@
     "price": 7.81
   },
   "SSL": {
-    "score_overall": 4.8,
-    "score_short": 4,
+    "score_overall": 4.5,
+    "score_short": 3,
     "score_mid": 5,
     "score_long": 5,
     "price": 11.61
@@ -385,15 +385,15 @@
     "price": 92.09
   },
   "MSFT": {
-    "score_overall": 7.9,
-    "score_short": 6,
+    "score_overall": 7.6,
+    "score_short": 5,
     "score_mid": 9,
     "score_long": 8,
     "price": 505.06
   },
   "NVDA": {
-    "score_overall": 6.7,
-    "score_short": 7,
+    "score_overall": 6.5,
+    "score_short": 6,
     "score_mid": 8,
     "score_long": 5,
     "price": 227.98

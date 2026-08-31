@@ -5300,6 +5300,81 @@
       }
     ],
     "voo_entry": 708.75,
+    "evaluated": true,
+    "picks_exit": {
+      "CRM": 257.54,
+      "PSX": 246.58,
+      "VLO": 358.92,
+      "MSFT": 507.29,
+      "NET": 305.11,
+      "MPC": 373.32,
+      "SMCI": 37.28,
+      "TMO": 617.1,
+      "TGT": 160.88,
+      "ZS": 188.38
+    },
+    "voo_exit": 704.89,
+    "picks_return_pct": 0.3,
+    "voo_return_pct": -0.54,
+    "beat_voo": true,
+    "evaluated_date": "2026-08-31"
+  },
+  {
+    "date": "2026-08-31",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "PSX",
+        "entry_price": 246.58,
+        "score": 8.4
+      },
+      {
+        "ticker": "CRM",
+        "entry_price": 257.54,
+        "score": 8.2
+      },
+      {
+        "ticker": "MSFT",
+        "entry_price": 507.29,
+        "score": 8.1
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 358.92,
+        "score": 7.9
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 373.32,
+        "score": 7.7
+      },
+      {
+        "ticker": "ZS",
+        "entry_price": 188.38,
+        "score": 7.5
+      },
+      {
+        "ticker": "NET",
+        "entry_price": 305.11,
+        "score": 7.5
+      },
+      {
+        "ticker": "ICE",
+        "entry_price": 160.7,
+        "score": 7.5
+      },
+      {
+        "ticker": "PLTR",
+        "entry_price": 186.38,
+        "score": 7.4
+      },
+      {
+        "ticker": "INTU",
+        "entry_price": 359.3,
+        "score": 7.4
+      }
+    ],
+    "voo_entry": 704.89,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,

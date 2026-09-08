@@ -5825,6 +5825,81 @@
       }
     ],
     "voo_entry": 708.01,
+    "evaluated": true,
+    "picks_exit": {
+      "CRM": 259.23,
+      "PSX": 255.09,
+      "VLO": 370.72,
+      "DELL": 524.14,
+      "COP": 134.26,
+      "SMCI": 39.59,
+      "REGN": 827.72,
+      "MPC": 388.9,
+      "GILD": 151.0,
+      "SNOW": 337.18
+    },
+    "voo_exit": 708.01,
+    "picks_return_pct": 0.0,
+    "voo_return_pct": 0.0,
+    "beat_voo": false,
+    "evaluated_date": "2026-09-08"
+  },
+  {
+    "date": "2026-09-08",
+    "source": "universe",
+    "picks": [
+      {
+        "ticker": "CRM",
+        "entry_price": 259.23,
+        "score": 8.6
+      },
+      {
+        "ticker": "PSX",
+        "entry_price": 255.09,
+        "score": 8.4
+      },
+      {
+        "ticker": "VLO",
+        "entry_price": 370.72,
+        "score": 8.1
+      },
+      {
+        "ticker": "DELL",
+        "entry_price": 524.14,
+        "score": 7.9
+      },
+      {
+        "ticker": "COP",
+        "entry_price": 134.26,
+        "score": 7.8
+      },
+      {
+        "ticker": "SMCI",
+        "entry_price": 39.59,
+        "score": 7.7
+      },
+      {
+        "ticker": "REGN",
+        "entry_price": 827.72,
+        "score": 7.7
+      },
+      {
+        "ticker": "MPC",
+        "entry_price": 388.9,
+        "score": 7.5
+      },
+      {
+        "ticker": "GILD",
+        "entry_price": 151.0,
+        "score": 7.5
+      },
+      {
+        "ticker": "SNOW",
+        "entry_price": 337.18,
+        "score": 7.5
+      }
+    ],
+    "voo_entry": 708.01,
     "evaluated": false,
     "picks_exit": {},
     "voo_exit": null,
